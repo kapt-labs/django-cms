@@ -6,6 +6,8 @@ django CMS
 This fork release/3.9.x branch includes
 ***************************************
 
+- FEAT: redirect to login url on restricted pages (from branch:
+  feat/redirect-on-restriction)
 - FIX: handle custom auth user model name (from branch:
   fix/custom-auth-user-model)
   [see PR](https://github.com/django-cms/django-cms/pull/7178)
