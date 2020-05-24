@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 from django.conf import settings
+from django.contrib.auth.views import redirect_to_login
 from django.http import Http404
 from django.shortcuts import render
 from django.template.response import TemplateResponse
 from django.urls import Resolver404, resolve, reverse
+from django.utils.http import urlquote
 
 from cms import __version__
 from cms.cache.page import set_page_cache
@@ -24,7 +26,7 @@ def render_page(request, page, current_language, slug):
     context['has_view_permissions'] = user_can_view_page(request.user, page)
 
     if not context['has_view_permissions']:
-        return _handle_no_page(request)
+        return redirect_to_login(urlquote(request.get_full_path()), settings.LOGIN_URL)
 
     template = get_page_template_from_request(request)
     response = TemplateResponse(request, template, context)
