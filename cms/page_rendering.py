@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 from django.conf import settings
+from django.contrib.auth.views import redirect_to_login
 from django.core.urlresolvers import resolve, Resolver404
 from django.http import Http404
 from django.template.response import TemplateResponse
+from django.utils.http import urlquote
 
 from cms import __version__
 from cms.cache.page import set_page_cache
@@ -25,7 +27,7 @@ def render_page(request, page, current_language, slug):
     context['has_view_permissions'] = user_can_view_page(request.user, page)
 
     if not context['has_view_permissions']:
-        return _handle_no_page(request, slug)
+        return redirect_to_login(urlquote(request.get_full_path()), settings.LOGIN_URL)
 
     response = TemplateResponse(request, template_name, context)
     response.add_post_render_callback(set_page_cache)
