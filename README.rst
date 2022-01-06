@@ -1,6 +1,15 @@
 ##########
 django CMS
 ##########
+
+***************************************
+This fork release/3.9.x branch includes
+***************************************
+
+- FIX: handle custom auth user model name (from branch:
+  fix/custom-auth-user-model)
+  [see PR](https://github.com/django-cms/django-cms/pull/7178)
+
 .. image:: https://travis-ci.org/django-cms/django-cms.svg?branch=develop
     :target: https://travis-ci.org/django-cms/django-cms
 .. image:: https://img.shields.io/pypi/v/django-cms.svg
@@ -106,7 +115,7 @@ Demo
 Getting Help
 ************
 
-Please head over to our `Slack channel <https://www.django-cms.org/slack>`_ or our `discourse forum <https://discourse.django-cms.org/>`_ for support. 
+Please head over to our `Slack channel <https://www.django-cms.org/slack>`_ or our `discourse forum <https://discourse.django-cms.org/>`_ for support.
 
 ******************
 Commercial support
@@ -120,7 +129,7 @@ info@django-cms.org.
 django CMS Association
 **********************
 
-The django CMS Association is a non-profit organization that was founded in 2020 with the goal to drive the success of django CMS, by increasing customer happiness, market share and open-source contributions. We provide infrastructure and guidance for the django CMS project. 
+The django CMS Association is a non-profit organization that was founded in 2020 with the goal to drive the success of django CMS, by increasing customer happiness, market share and open-source contributions. We provide infrastructure and guidance for the django CMS project.
 
 The non-profit django CMS Association is dependent on donations to fulfill its purpose. The best way to donate is to become a member of the association and pay membership fees. The funding will be funneled back into core development and community projects.
 
