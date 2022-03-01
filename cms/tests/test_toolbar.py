@@ -8,6 +8,7 @@ from django.contrib import admin
 from django.contrib.admin.models import CHANGE, LogEntry
 from django.contrib.auth.models import AnonymousUser, Permission
 from django.contrib.contenttypes.models import ContentType
+from django.template import RequestContext
 from django.template.defaultfilters import truncatewords
 from django.test import TestCase
 from django.test.client import RequestFactory
@@ -23,13 +24,16 @@ from cms.admin.forms import RequestToolbarForm
 from cms.cms_toolbars import (ADMIN_MENU_IDENTIFIER, ADMINISTRATION_BREAK, get_user_model,
                               LANGUAGE_MENU_IDENTIFIER)
 from cms.middleware.toolbar import ToolbarMiddleware
-from cms.constants import PUBLISHER_STATE_DIRTY
-from cms.models import Page, UserSettings, PagePermission
-from cms.test_utils.project.placeholderapp.models import Example1, CharPksExample
-from cms.test_utils.project.placeholderapp.views import detail_view, detail_view_char, ClassDetail
-from cms.test_utils.testcases import (CMSTestCase,
-                                      URL_CMS_PAGE_ADD, URL_CMS_PAGE_CHANGE,
-                                      URL_CMS_USERSETTINGS)
+from cms.models import Page, PagePermission, StaticPlaceholder, UserSettings
+from cms.test_utils.project.placeholderapp.models import (
+    CharPksExample, Example1,
+)
+from cms.test_utils.project.placeholderapp.views import (
+    ClassDetail, detail_view, detail_view_char,
+)
+from cms.test_utils.testcases import (
+    URL_CMS_PAGE_ADD, URL_CMS_PAGE_CHANGE, URL_CMS_USERSETTINGS, CMSTestCase,
+)
 from cms.test_utils.util.context_managers import UserLoginContext
 from cms.toolbar_pool import toolbar_pool
 from cms.toolbar.items import (ToolbarAPIMixin, LinkItem, ItemSearchResult,
@@ -660,6 +664,29 @@ class ToolbarTests(ToolbarTestBase):
         toolbar.post_template_populate()
         self.assertTrue(toolbar.edit_mode_active)
         items = toolbar.get_left_items() + toolbar.get_right_items()
+        self.assertEqual(len(items), 7)
+
+    def test_publish_button_no_page(self):
+        static_placeholder = StaticPlaceholder.objects.create(name="foo", code='bar', site_id=1)
+        request = self.get_page_request(None, self.get_superuser(), '/', edit=True)
+
+        # Add content to static placeholder, and mark as dirty
+        plugin = add_plugin(
+            static_placeholder.draft, "TextPlugin", "en",
+            body="01",
+        )
+        plugin.save()
+        static_placeholder.dirty = True
+        static_placeholder.save()
+
+        toolbar = CMSToolbar(request)
+        renderer = toolbar.get_content_renderer()
+        renderer.render_static_placeholder(static_placeholder, RequestContext(request))
+        toolbar.populate()
+        toolbar.post_template_populate()
+
+        items = toolbar.get_left_items() + toolbar.get_right_items()
+        self.assertTrue(toolbar.edit_mode_active)
         self.assertEqual(len(items), 7)
 
     def test_no_publish_button(self):
