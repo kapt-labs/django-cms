@@ -1,6 +1,17 @@
 ##########
 django CMS
 ##########
+
+***************************************
+This fork release/3.7.x branch includes
+***************************************
+
+- FIX: publishing static placeholders outside of CMS (from branch:
+  fix/static-placeholder-publishing)
+- FEAT: redirect to login url on restricted pages (from branch:
+  feat/redirect-on-restriction)
+- FIX: Include request full path in placeholder cache key compute
+
 .. image:: https://travis-ci.org/divio/django-cms.svg?branch=develop
     :target: https://travis-ci.org/divio/django-cms
 .. image:: https://img.shields.io/pypi/v/django-cms.svg
