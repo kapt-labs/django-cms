@@ -6,6 +6,8 @@ django CMS
 This fork release/3.7.x branch includes
 ***************************************
 
+- FIX: force placeholder cache clearing (from branch:
+  fix/placeholder-field-cache-clear)
 - FIX: publishing static placeholders outside of CMS (from branch:
   fix/static-placeholder-publishing)
 - FEAT: redirect to login url on restricted pages (from branch:

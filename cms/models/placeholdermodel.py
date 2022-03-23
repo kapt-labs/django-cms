@@ -510,6 +510,8 @@ class Placeholder(models.Model):
 
         elif attached_model is StaticPlaceholder:
             StaticPlaceholder.objects.filter(draft=self).update(dirty=True)
+        else:
+            self.clear_cache(language)
 
     def get_plugin_tree_order(self, language, parent_id=None):
         """
