@@ -16,6 +16,14 @@ django CMS
 
 Open source enterprise content management system based on the Django framework and backed by the non-profit django CMS Association (`Sponsor us! <https://www.django-cms.org/en/memberships/>`_).
 
+****************************************
+This fork release/3.11.x branch includes
+****************************************
+
+- FEAT: redirect to login url on restricted pages
+  When a user hasn't the permission to view a page: redirect to the login
+  page instead of returning an HTTP 404 missing page code.
+
 *******************************************
 Contribute to this project and win rewards
 *******************************************
