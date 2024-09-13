@@ -27,7 +27,7 @@ def render_page(request, page, current_language, slug):
     context['has_view_permissions'] = user_can_view_page(request.user, page)
 
     if not context['has_view_permissions']:
-        return PermissionDenied()
+        raise PermissionDenied()
 
     template = get_page_template_from_request(request)
     response = TemplateResponse(request, template, context)
