@@ -2,8 +2,8 @@ from urllib.parse import quote
 
 from django.conf import settings
 from django.contrib.auth.views import redirect_to_login
+from django.core.exceptions import PermissionDenied
 
-from cms.page_rendering import _handle_no_page
 from cms.utils import get_current_site
 from cms.utils.page_permissions import user_can_view_page
 
@@ -16,7 +16,7 @@ def cms_perms(func):
                 return redirect_to_login(quote(request.get_full_path()), settings.LOGIN_URL)
             site = get_current_site()
             if not user_can_view_page(request.user, page, site):
-                return _handle_no_page(request)
+                return PermissionDenied()
         return func(request, *args, **kwargs)
     inner.__module__ = func.__module__
     inner.__doc__ = func.__doc__
